@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberRepositoryTest {
 
     @Autowired
-    MemberRepository memberRepository;
+    MemberRepository_ex memberRepositoryEx;
 
     @Test
     @Transactional
@@ -28,16 +28,16 @@ public class MemberRepositoryTest {
         //        member.setUsername("memberA");
                 //멤버는 스프링 빈으로 관리되지 않음. 싱글톤x
         Member member = new Member();
-        member.setUsername("memberA");
+        member.setName("memberA");
 
         //when
-        Long savedId = memberRepository.save(member);
-        Member foundMember = memberRepository.find(savedId);
+        Long savedId = memberRepositoryEx.save(member);
+        Member foundMember = memberRepositoryEx.find(savedId);
 
         //then
 
         Assertions.assertThat(foundMember.getId()).isEqualTo(member.getId());
-        Assertions.assertThat(foundMember.getUsername()).isEqualTo(member.getUsername());
+        Assertions.assertThat(foundMember.getName()).isEqualTo(member.getName());
         Assertions.assertThat(foundMember).isEqualTo(member);
 
         System.out.println("foundMember == member" + (foundMember==member));
