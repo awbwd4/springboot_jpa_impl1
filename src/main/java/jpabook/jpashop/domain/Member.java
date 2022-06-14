@@ -21,7 +21,7 @@ public class Member {
     @Embedded
     private Address address;
 
-    @OneToMany(mappedBy = "order")//멤버1 - 주문 n
+    @OneToMany(mappedBy = "member")//멤버1 - 주문 n
     private List<Order> orders = new ArrayList<>();
 
 
