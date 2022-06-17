@@ -1,10 +1,13 @@
 package jpabook.jpashop.repository;
 
+import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.item.Item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
@@ -41,7 +44,6 @@ public class ItemRepository {
                 .setParameter("name", name)
                 .getResultList();
     }
-
 
 
 }
