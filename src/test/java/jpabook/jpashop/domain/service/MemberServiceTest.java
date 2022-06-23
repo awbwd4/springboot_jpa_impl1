@@ -64,6 +64,12 @@ public class MemberServiceTest {
         fail("예외가 발생해야 함.");
     }
 
+//    @Test
+//    @Rollback(value = false)
+//    public void 삭제() throws Exception {
+//        memberService.delEntity();
+//
+//    }
 
 
 }

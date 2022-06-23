@@ -34,6 +34,11 @@ public class MemberRepository {
                 .getResultList();
     }
 
+    public void delEntity() {
+        em.remove(em.find(Member.class, "member"));
+    }
+
+
 
 
 

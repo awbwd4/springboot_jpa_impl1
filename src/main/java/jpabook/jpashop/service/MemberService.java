@@ -48,4 +48,10 @@ public class MemberService {
     }
 
 
+    //
+//    @Transactional(readOnly = false)
+//    public void delEntity(){
+//        memberRepository.delEntity();
+//    }
+
 }
