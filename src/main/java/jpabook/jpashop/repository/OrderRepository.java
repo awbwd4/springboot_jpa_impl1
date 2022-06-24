@@ -78,6 +78,28 @@ public class OrderRepository {
         return query.getResultList();
     }
 
+    /** fetch join 쓰기**/
+    public List<Order> findAllWithMemberDelivery() {
+        return em.createQuery(
+        "select o from Order o" +
+                " join fetch o.member m" +//Order를 가져올때 member까지 한번에 가져옴
+                " join fetch o.delivery d", Order.class)
+                .getResultList();
+       //fetch join을 써서 지연로딩(LAZY)인 멤버들의 값을 다 채워서 가져옴(프록시 아님)
+    }
+
+    /**
+     * DTO에 맞춰서 DB에서 가져오기.
+     * 일반적인 sql처럼 원하는 값만 select 해온다.
+     * **/
+    public List<OrderSimpleQueryDto> findOrderDtos() {
+       return em.createQuery(
+       "select new jpabook.jpashop.repository.OrderSimpleQueryDto(o.id, m.name, o.orderDate, o.status, d.address) " +
+               "from Order o" +
+               " join o.member m" +
+               " join o.delivery d", OrderSimpleQueryDto.class)
+        .getResultList();
+    }
 
 
 }

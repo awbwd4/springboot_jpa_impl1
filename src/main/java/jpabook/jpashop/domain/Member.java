@@ -24,7 +24,7 @@ public class Member {
     @Embedded
     private Address address;
 
-//    @JsonIgnore //api 스펙에서 제외
+    @JsonIgnore //api 스펙에서 제외
     @OneToMany(mappedBy = "member")//멤버1 - 주문 n
     private List<Order> orders = new ArrayList<>();
 

@@ -1,5 +1,6 @@
 package jpabook.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +25,25 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY) // 주문n - 멤버 1
     @JoinColumn(name = "member_id")// 매핑될 fk
     private Member member;
+    /**
+     * FetchType.LAZY : 지연로딩
+     * 지연로딩이 되면 Member객체의 정보는 일단 가져오지 않고
+     * 나머지 필드들의 정보만 가져온다
+     * Member객체에 null을 할 수는 없으므로
+     * proxy객체를 넣어서 가져온다.
+     * 그 proxy가 "ByteBuddyInterceptor"
+     *
+     * jackson 라이브러리에서는 이 프록시를 읽을 수 없다.
+     * 따라서 지연로딩인 경우에는
+     * jackson 라이브러리가  아무것도 하지 않도록 해야함.
+     * hibernate5module 빈 등록
+     *
+     * **///
 
+
+
+
+//    @JsonIgnore
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
