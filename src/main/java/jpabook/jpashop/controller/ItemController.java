@@ -98,7 +98,7 @@ public class ItemController {
         itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
 
 //        itemService.saveItem(book); // merge 방식의 업데이트
-        return "redirect:items";
+        return "redirect:/items";
 
     }
 

@@ -47,6 +47,14 @@ public class MemberService {
         return memberRepository.findOne(memberId);
     }
 
+    @Transactional
+    public void update(Long id, String name) {
+
+        Member findMember = memberRepository.findOne(id);//영속성 컨텍스트에서 가져옴0
+        findMember.setName(name);// dirty checking
+
+    }
+
 
     //
 //    @Transactional(readOnly = false)
