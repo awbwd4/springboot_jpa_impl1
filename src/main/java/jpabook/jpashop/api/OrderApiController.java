@@ -10,6 +10,7 @@ import jpabook.jpashop.repository.order.query.OrderFlatDto;
 import jpabook.jpashop.repository.order.query.OrderItemQueryDto;
 import jpabook.jpashop.repository.order.query.OrderQueryDto;
 import jpabook.jpashop.repository.order.query.OrderQueryRepository;
+import jpabook.jpashop.service.query.OrderQueryService;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ import static java.util.stream.Collectors.*;
 public class OrderApiController {
     private final OrderRepository orderRepository;
     private final OrderQueryRepository orderQueryRepository;
+    private final OrderQueryService orderQueryService;
 
     /**
      * Order에서 OneToMany 관계인 OrderItem리스트까지 api에 포함한다.
@@ -69,11 +71,21 @@ public class OrderApiController {
     @GetMapping("/api/v3/orders")
     public List<OrderDto> orderV3() {
         List<Order> orders = orderRepository.findAllWithItem();
+
         List<OrderDto> result = orders.stream()
                 .map(OrderDto::new)
                 .collect(toList());
+
         return result;
     }
+
+    // OSIV 해결 : 트랜잭션 안(Service 계층)에서 지연 로딩 처리
+    @GetMapping("/api/v3.2/orders")
+    public List<jpabook.jpashop.service.query.OrderDto> orderV3_2() {
+        return orderQueryService.orderV3();
+    }
+
+
 
     //v3.1 엔티티를 DTO로 변환, 페이징처리/한계돌파(batch)
     @GetMapping("/api/v3.1/orders")

@@ -16,7 +16,7 @@ public class OrderQueryRepository {
 
     private final EntityManager em;
 
-    /**
+    /** v4
      * 컬렉션은 별도로 조회
      * Query: 루트 1번, 컬렉션 N 번
      * 단건 조회에서 많이 사용하는 방식
@@ -36,7 +36,7 @@ public class OrderQueryRepository {
     }
 
 
-    /**
+    /** v5
      * 최적화
      * Query: 루트 1번, 컬렉션 1번
      * 데이터를 한꺼번에 처리할 때 많이 사용하는 방식
@@ -58,7 +58,7 @@ public class OrderQueryRepository {
 
     }
 
-    /**
+    /** v6
      * Order - OrderItem - Item을 한번에 조인해서 한번에 데이터를 가져오기
      * **/
     public List<OrderFlatDto> findAllByDto_flat() {
