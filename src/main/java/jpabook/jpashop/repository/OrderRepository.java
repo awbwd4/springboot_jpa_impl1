@@ -77,7 +77,7 @@ public class OrderRepository {
 
         return query.getResultList();
     }
-
+    /** /////////////// 멤버 가져오기 xToOne /////////////// **/
     /** fetch join 쓰기**/
     public List<Order> findAllWithMemberDelivery() {
         return em.createQuery(
@@ -102,4 +102,33 @@ public class OrderRepository {
     }
 
 
+    /** /////////////// 상품 가져오기 xToMany /////////////// **/
+    /**
+     * OrderItem 리스트, Fetch join으로 가져오기.
+     * **/
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                        "select distinct o from Order o" +
+                                " join fetch o.member m" +
+                                " join fetch o.delivery d" +
+                                " join fetch o.orderItems oi" +
+                                " join fetch oi.item i", Order.class)
+                //distinct : sql과 달리, 루트 엔티티(Order)에서 중복이 발생하면
+                // 그 중복을 제거해서 컬렉션에 넣어준다.
+                // sql은 모든 칼럼값이 같아야 중복 제거가 되는데
+                // jdql은 중복된것만 제거해줌.
+                .setFirstResult(1)
+                .setMaxResults(100)
+                .getResultList();
+    }
+
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        return em.createQuery(
+                        "select o from Order o" +
+                                " join fetch o.member m" +//Order를 가져올때 member까지 한번에 가져옴
+                                " join fetch o.delivery d", Order.class)
+                .setFirstResult(offset).setMaxResults(limit)
+                .getResultList();
+        //fetch join을 써서 지연로딩(LAZY)인 멤버들의 값을 다 채워서 가져옴(프록시 아님)
+    }
 }
