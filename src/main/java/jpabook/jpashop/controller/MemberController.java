@@ -26,6 +26,15 @@ public class MemberController {
         return "members/createMemberForm";
     }
 
+    /**
+     * 1) Controller에 "members/createMemberForm" 요청이 들어오면
+     * 2) Controller는 createMemberForm.html로 MemberForm.class(폼 객체)를 전달함
+     * 3) createMemberForm.html은 이 MemberForm 객체에 값을 채워 넣고
+     * 4) 이 채워진 form객체와 함께 "members/new"요청을 Controller로 전달
+     * 5) Controller는 이 "members/new" 요청을 받으면 함께 받은 MemberForm 객체의 데이터들을 가지고 MemberService를 호출해서 회원 가입 처리
+     * 6) 처리가 끝나면 home으로 리다이렉트 "redirect:/"
+     */
+
     // 회원 가입 Form으로 회원 가입 수행
     @PostMapping("/members/new")
     public String create(@Valid MemberForm form, BindingResult result) {
